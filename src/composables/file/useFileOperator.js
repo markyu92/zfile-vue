@@ -3,7 +3,8 @@ import {
     newFolderReq,
     renameFileReq, renameFolderReq,
     moveFolderReq, moveFileReq,
-    copyFileReq, copyFolderReq
+    copyFileReq, copyFolderReq,
+    compressionReq
 } from "~/api/home/file-operator";
 
 import useStorageConfigStore from "~/stores/storage-config";
@@ -30,6 +31,35 @@ import selectFolder from "~/components/file/selectFolder";
 export default function useFileOperator() {
 
     const { loadFile } = useFileData();
+
+
+    /**
+     * 压缩
+     * @param {Object} row 已选择的文件 
+     */
+    const compression = (row) => {
+        if (!selectRows.value && selectRows.value.length != 1) {
+            ElMessage.warning("请选择一个目录压缩");
+            return;
+        }
+
+        console.log(selectRows);
+
+        let sr = selectRows.value[0]
+        let param = {
+            path: sr.path,
+            name: sr.name,
+            storageKey: storageKey.value
+        }
+        compressionReq(param).then((resp) => {
+            if (resp.data) {
+                ElMessage.info("压缩任务提交成功，请稍后刷新页面");
+            } else {
+                ElMessage.error("当前存储库不支持压缩功能");
+            }
+            
+        })
+    }
 
     /**
      * 批量下载已选择的所有文件
@@ -350,6 +380,6 @@ export default function useFileOperator() {
 
     return {
         batchDownloadFile, rename, newFolder, moveTo, copyTo,
-        batchDelete
+        batchDelete, compression
     }
 }

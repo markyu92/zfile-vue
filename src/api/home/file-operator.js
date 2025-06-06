@@ -21,6 +21,14 @@ export const batchDeleteReq = (data) => {
     })
 }
 
+export const compressionReq = (data) => {
+    console.log(data);
+    return axios({
+        url: `/api/file/operator/compression`,
+        method: "post",
+        data
+    })
+}
 
 // 重命名文件
 export const renameFileReq = (data) => {

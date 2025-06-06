@@ -76,6 +76,10 @@ const useStorageConfigStore = defineStore('storageConfigStore', {
       let shortLink = state.globalConfig.showShortLink && originPermission.generateShortLink;
       let download = originPermission.download && selectStatistics.value.isAllFile;
       return {
+        /*
+         * 压缩权限默认给true 
+         */
+        compression: true,
         open: selectStatistics.value.isSingleSelectFolder,
         preview: originPermission.preview && selectStatistics.value.isSingleSelectFile,
         download: download,

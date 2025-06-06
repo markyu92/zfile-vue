@@ -2,28 +2,25 @@
 	<Contextmenu auto-ajust-placement ref="contextmenu" @show="addUnderlineToLastVisibleItem">
 		<template v-if="contextMenuTargetFile">
 			<div class="contextmenu-group-item">
-				<ContextmenuItem v-show="storageConfigStore.permission.open"
-								 @click="openRow(selectRow, true)">
+				<ContextmenuItem v-show="storageConfigStore.permission.open" @click="openRow(selectRow, true)">
 					<i-mdi-folder-open-outline class="contextmenu-icon" />
 					<label>打开</label>
 				</ContextmenuItem>
-				<ContextmenuItem v-show="storageConfigStore.permission.open"
-								 @click="openNewTab(selectRow)">
+				<ContextmenuItem v-show="storageConfigStore.permission.open" @click="openNewTab(selectRow)">
 					<i-mdi-folder-open-outline class="contextmenu-icon" />
 					<label>新标签打开</label>
 				</ContextmenuItem>
-				<ContextmenuItem v-show="storageConfigStore.permission.preview"
-								 @click="openRow(selectRow, true)">
+				<ContextmenuItem v-show="storageConfigStore.permission.preview" @click="openRow(selectRow, true)">
 					<i-mdi-eye-outline class="contextmenu-icon" />
 					<label>预览</label>
 				</ContextmenuItem>
 				<ContextmenuItem v-show="storageConfigStore.permission.download && selectStatistics.isSingleSelect"
-								 @click="batchDownloadFile">
+					@click="batchDownloadFile">
 					<i-mdi-download-outline class="contextmenu-icon" />
 					<label>下载</label>
 				</ContextmenuItem>
 				<ContextmenuItem v-show="selectStatistics.isAllFile && storageConfigStore.permission.copyDownloadLink"
-								 @click="copyDownloadLink">
+					@click="copyDownloadLink">
 					<i-mdi-link-plus class="contextmenu-icon" />
 					<label>复制下载链接</label>
 				</ContextmenuItem>
@@ -32,23 +29,28 @@
 
 			<div class="contextmenu-group-item">
 				<ContextmenuItem v-show="selectStatistics.isAllFile && storageConfigStore.permission.pathLink"
-								 @click="openGenerateLinkDialog('pathLink')">
+					@click="openGenerateLinkDialog('pathLink')">
 					<i-mdi-link-plus class="contextmenu-icon" />
 					<label>获取直链</label>
 				</ContextmenuItem>
 				<ContextmenuItem v-show="selectStatistics.isAllFile && storageConfigStore.permission.shortLink"
-								 @click="openGenerateLinkDialog('shortLink')">
+					@click="openGenerateLinkDialog('shortLink')">
 					<i-mdi-link-plus class="contextmenu-icon" />
 					<label>生成短链</label>
 				</ContextmenuItem>
-				<ContextmenuItem v-show="storageConfigStore.permission.bothLink"
-								 @click="openGenerateLinkDialog('all')">
+				<ContextmenuItem v-show="storageConfigStore.permission.bothLink" @click="openGenerateLinkDialog('all')">
 					<i-mdi-link-plus class="contextmenu-icon" />
 					<label>同时获取</label>
 				</ContextmenuItem>
 			</div>
 
 			<div class="contextmenu-group-item">
+				<ContextmenuItem
+					v-show="selectStatistics.isSingleSelect && selectStatistics.isAllFolder && storageConfigStore.permission.compression"
+					@click="compression">
+					<i-mdi-folder-zip-outline class="contextmenu-icon" />
+					<label>压缩</label>
+				</ContextmenuItem>
 				<ContextmenuItem v-show="storageConfigStore.permission.rename" @click="rename">
 					<i-mdi-rename-outline class="contextmenu-icon" />
 					<label>重命名</label>
@@ -111,7 +113,7 @@ let storageConfigStore = useStorageConfigStore();
 
 const { openRow } = useFileData();
 const { selectRow, selectRows, selectStatistics } = useFileSelect();
-const { rename, batchDownloadFile, moveTo, copyTo, newFolder, batchDelete } = useFileOperator();
+const { rename, batchDownloadFile, moveTo, copyTo, newFolder, batchDelete, compression } = useFileOperator();
 const { openGenerateLinkDialog } = useFileLink();
 const { openUploadDialog, openUploadFolderDialog } = useFileUpload();
 
